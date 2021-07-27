@@ -1,0 +1,47 @@
+{
+  "name": "@docage/core",
+  "version": "0.1.0",
+  "description": "The core of docage",
+  "main": "index.js",
+  "module": "dist/core.esm-bundler.js",
+  "types": "dist/core.d.ts",
+  "files": [
+    "index.js",
+    "dist/**",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "prepublish": "yarn build",
+    "build": "node ../../scripts/build core --types",
+    "test": "jest --coverage --runInBand"
+  },
+  "buildOptions": {
+    "name": "DocageCore",
+    "formats": [
+      "esm-bundler",
+      "cjs"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "author": "rayl <rayl@pisaas.com>",
+  "license": "MIT",
+  "homepage": "https://docage.pisaas.com",
+  "bugs": {
+    "url": "https://github.com/pisaas/docage/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pisaas/docage.git"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.3"
+  }
+}

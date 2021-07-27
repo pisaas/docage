@@ -1,0 +1,7 @@
+src/styles
+build/*.js
+src/vendor/*.js
+src/assets
+public
+dist
+codegen/

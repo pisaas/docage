@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0",
+  "npmClient": "yarn",
+  "command": {
+    "publish": {
+      "ignoreChanges": ["**/fixtures/**", "**/tests/**", "**/*.md"],
+      "message": "chore(release): publish %s"
+    },
+    "bootstrap": {
+      "npmClientArgs": ["--no-package-lock"]
+    }
+  },
+  "packages": ["packages/*"]
+}
