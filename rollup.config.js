@@ -28,9 +28,17 @@ const outputConfigs = {
     file: resolve(`dist/${name}.esm-bundler.js`),
     format: `es`
   },
+  'esm-browser': {
+    file: resolve(`dist/${name}.esm-browser.js`),
+    format: `es`
+  },
   cjs: {
     file: resolve(`dist/${name}.cjs.js`),
     format: `cjs`
+  },
+  global: {
+    file: resolve(`dist/${name}.global.js`),
+    format: `iife`
   }
 }
 
@@ -49,6 +57,9 @@ if (process.env.NODE_ENV === 'production') {
     if (format === 'cjs') {
       packageConfigs.push(createProductionConfig(format))
     }
+    if (/^(global|esm-browser)/.test(format)) {
+      packageConfigs.push(createMinifiedConfig(format))
+    }
   })
 }
 
@@ -66,6 +77,13 @@ function createConfig(format, output, plugins = []) {
 
   const isProductionBuild = process.env.__DEV__ === 'false' || /\.prod\.js$/.test(output.file)
   const isBundlerESMBuild = /esm-bundler/.test(format)
+  const isBrowserESMBuild = /esm-browser/.test(format)
+  const isNodeBuild = format === 'cjs'
+  const isGlobalBuild = /global/.test(format)
+
+  if (isGlobalBuild) {
+    output.name = packageOptions.name
+  }
 
   const shouldEmitDeclarations = pkg.types && process.env.TYPES != null && !hasTSChecked
 
@@ -89,10 +107,17 @@ function createConfig(format, output, plugins = []) {
 
   let entryFile = `src/index.ts`
 
-  let external = [
-    ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.peerDependencies || {})
-  ]
+  let external = []
+
+  if (isGlobalBuild || isBrowserESMBuild) {
+    if (!packageOptions.enableNonBrowserBranches) {
+      // normal browser builds - non-browser only imports are tree-shaken,
+      // they are only listed here to suppress warnings.
+      external = ['source-map', '@babel/parser', 'estree-walker']
+    }
+  } else {
+    external = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})]
+  }
 
   const nodePlugins =
     packageOptions.enableNonBrowserBranches && format !== 'cjs'
@@ -107,6 +132,8 @@ function createConfig(format, output, plugins = []) {
         ]
       : []
 
+  // const nodePlugins = []
+
   return {
     input: resolve(entryFile),
     // Global and Browser ESM builds inlines everything so that they can be
@@ -117,7 +144,15 @@ function createConfig(format, output, plugins = []) {
         namedExports: false
       }),
       tsPlugin,
-      createReplacePlugin(isProductionBuild, isBundlerESMBuild),
+      createReplacePlugin(
+        isProductionBuild,
+        isBundlerESMBuild,
+        isBrowserESMBuild,
+        (isGlobalBuild || isBrowserESMBuild || isBundlerESMBuild) &&
+          !packageOptions.enableNonBrowserBranches,
+        isGlobalBuild,
+        isNodeBuild
+      ),
       ...nodePlugins,
       ...plugins
     ],
@@ -133,7 +168,14 @@ function createConfig(format, output, plugins = []) {
   }
 }
 
-function createReplacePlugin(isProduction, isBundlerESMBuild) {
+function createReplacePlugin(
+  isProduction,
+  isBundlerESMBuild,
+  isBrowserESMBuild,
+  isBrowserBuild,
+  isGlobalBuild,
+  isNodeBuild
+) {
   const replacements = {
     __COMMIT__: `"${process.env.COMMIT}"`,
     __VERSION__: `"${masterVersion}"`,
@@ -145,7 +187,13 @@ function createReplacePlugin(isProduction, isBundlerESMBuild) {
     // this is only used during Vue's internal tests
     __TEST__: false,
     // If the build is expected to run directly in the browser (global / esm builds)
+    __BROWSER__: isBrowserBuild,
+    __GLOBAL__: isGlobalBuild,
+    // If the build is expected to run directly in the browser (global / esm builds)
     __ESM_BUNDLER__: isBundlerESMBuild,
+    __ESM_BROWSER__: isBrowserESMBuild,
+    // is targeting Node (SSR)?
+    __NODE_JS__: isNodeBuild,
 
     // feature flags
     __FEATURE_SUSPENSE__: true,
@@ -170,4 +218,25 @@ function createProductionConfig(format) {
     file: resolve(`dist/${name}.${format}.prod.js`),
     format: outputConfigs[format].format
   })
+}
+
+function createMinifiedConfig(format) {
+  const { terser } = require('rollup-plugin-terser')
+  return createConfig(
+    format,
+    {
+      file: outputConfigs[format].file.replace(/\.js$/, '.prod.js'),
+      format: outputConfigs[format].format
+    },
+    [
+      terser({
+        module: /^esm/.test(format),
+        compress: {
+          ecma: 2015,
+          pure_getters: true
+        },
+        safari10: true
+      })
+    ]
+  )
 }

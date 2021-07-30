@@ -1,1 +1,1 @@
-export * from './Vue3Renderer'
+export * from './Renderer'

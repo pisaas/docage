@@ -4,8 +4,8 @@
 只要传入要构建的包名和格式，就可以构建制定的包（默认为 buildOptions.formats制定的包，或者"esm, cjs"）
 
 ```
-# 名称支持模糊匹配，如果名字中包括 vue3，则构建所有vue3 相关包:
-yarn build vue3
+# 名称支持模糊匹配，如果名字中包括 runtime，则构建所有runtime 相关包:
+yarn build runtime
 
 # 制定输出格式
 yarn build core --formats cjs
@@ -27,7 +27,7 @@ const devOnly = args.devOnly || args.d
 const prodOnly = !devOnly && (args.prodOnly || args.p)
 const sourceMap = args.sourcemap || args.s
 const isRelease = args.release
-const buildTypes = args.t || args.types || isRelease
+const buildTypes = (args.t || args.types) !== false || isRelease
 const buildAllMatching = args.all || args.a
 const commit = execa.sync('git', ['rev-parse', 'HEAD']).stdout.slice(0, 7)
 

@@ -5,11 +5,13 @@
 ```ts
 
 // @public (undocumented)
-export class BaseSchema {
+export class BaseSchema implements Schema {
+    // (undocumented)
+    [prop: string]: any;
 }
 
 // @public
-export interface BasicWidgetConfig extends GenericObject {
+interface BasicWidgetConfig extends GenericObject {
     // (undocumented)
     name?: string;
     // (undocumented)
@@ -23,15 +25,26 @@ export class ButtonSchema extends BaseSchema {
     constructor();
 }
 
+declare namespace decorators {
+    export {
+        Widget_2 as Widget,
+        FormItemWidget,
+        registerWidget,
+        BasicWidgetConfig,
+        FormItemWidgetConfig
+    }
+}
+export { decorators }
+
 // @public (undocumented)
 export class FormItemSchema extends BaseSchema {
 }
 
 // @public
-export function FormItemWidget(config: FormItemWidgetConfig): MethodDecorator;
+function FormItemWidget(config: FormItemWidgetConfig): MethodDecorator;
 
 // @public
-export interface FormItemWidgetConfig extends BasicWidgetConfig {
+interface FormItemWidgetConfig extends BasicWidgetConfig {
 }
 
 // @public (undocumented)
@@ -39,15 +52,46 @@ export class GridSchema extends BaseSchema {
     constructor();
 }
 
+// @public
+export const noop: () => void;
+
 // @public (undocumented)
-export function registerWidget(): void;
+function registerWidget(): void;
+
+// @public
+export interface RendererConfig<T = unknown> extends GenericObject {
+    // (undocumented)
+    el: Element | string;
+    // (undocumented)
+    root: T;
+    // (undocumented)
+    schema: Schema;
+    // (undocumented)
+    widgets: Widget<T>[];
+}
+
+// @public
+export interface RenderOptions extends GenericObject {
+}
 
 // @public (undocumented)
 export class RootSchema extends BaseSchema {
 }
 
+// @public (undocumented)
+export interface Schema {
+}
+
+// @public (undocumented)
+export interface Widget<T = unknown> {
+    // (undocumented)
+    Schema: Schema;
+    // (undocumented)
+    View: T;
+}
+
 // @public
-export function Widget(config: BasicWidgetConfig): MethodDecorator;
+function Widget_2(config: BasicWidgetConfig): MethodDecorator;
 
 // (No @packageDocumentation comment for this package)
 

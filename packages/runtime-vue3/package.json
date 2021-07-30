@@ -5,20 +5,26 @@
   "author": "rayl <rayl@pisaas.com>",
   "homepage": "https://docage.pisaas.com",
   "license": "MIT",
-  "main": "lib/",
-  "types": "lib/",
-  "directories": {
-    "lib": "lib"
-  },
+  "module": "dist/runtime-vue3.esm-bundler.js",
+  "types": "dist/runtime-vue3.d.ts",
   "files": [
     "CHANGELOG.md",
     "LICENSE",
     "README.md",
-    "lib/**"
+    "dist/**"
   ],
+  "buildOptions": {
+    "name": "RuntimeVue3",
+    "formats": [
+      "cjs",
+      "esm-browser"
+    ],
+    "prod": false,
+    "enableNonBrowserBranches": true
+  },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "node ../../scripts/build --name=core",
+    "build": "node ../../scripts/build --name=runtime-vue3",
     "test": "jest --coverage --runInBand"
   },
   "engines": {
@@ -33,6 +39,10 @@
   },
   "bugs": {
     "url": "https://github.com/pisaas/docage/issues"
+  },
+  "peerDependencies": {
+    "vue": "3.x",
+    "vuex": "4.x"
   },
   "dependencies": {
     "@docage/core": "^0.1.0"

@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "prepublish": "yarn build",
-    "build": "node ../../scripts/build core --types",
+    "build": "node ../../scripts/build core",
     "test": "jest --coverage --runInBand"
   },
   "buildOptions": {

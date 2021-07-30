@@ -17,10 +17,10 @@
     "jsx": "preserve",
     "skipLibCheck": true,
     "lib": ["esnext", "dom"],
-    "types": ["jest", "node"],
+    "types": ["jest", "puppeteer", "node"],
     "rootDir": ".",
     "paths": {
-      "@docap/*": ["packages/*/src"]
+      "@docage/*": ["packages/*/src"]
     }
   },
   "include": ["packages/global.d.ts", "packages/*/src", "packages/*/tests"]
