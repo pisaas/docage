@@ -20,8 +20,8 @@
   "buildOptions": {
     "name": "DocageCore",
     "formats": [
-      "esm-bundler",
-      "cjs"
+      "cjs",
+      "esm-bundler"
     ]
   },
   "publishConfig": {

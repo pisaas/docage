@@ -17,14 +17,16 @@
     "name": "RuntimeVue3",
     "formats": [
       "cjs",
-      "esm-browser"
+      "esm-bundler",
+      "esm-browser",
+      "global"
     ],
     "prod": false,
     "enableNonBrowserBranches": true
   },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "node ../../scripts/build --name=runtime-vue3",
+    "build": "node ../../scripts/build runtime-vue3",
     "test": "jest --coverage --runInBand"
   },
   "engines": {
@@ -46,5 +48,9 @@
   },
   "dependencies": {
     "@docage/core": "^0.1.0"
+  },
+  "devDependencies": {
+    "vue": "^3.1.5",
+    "vuex": "^4.0.2"
   }
 }

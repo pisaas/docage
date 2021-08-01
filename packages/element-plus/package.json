@@ -5,20 +5,26 @@
   "author": "rayl <rayl@pisaas.com>",
   "homepage": "https://docage.pisaas.com",
   "license": "MIT",
-  "main": "lib/",
-  "types": "lib/",
-  "directories": {
-    "lib": "lib"
-  },
+  "main": "dist/",
+  "types": "dist/",
   "files": [
     "CHANGELOG.md",
     "LICENSE",
     "README.md",
-    "lib/**"
+    "dist/**"
   ],
+  "buildOptions": {
+    "name": "ElementPlus",
+    "formats": [
+      "cjs",
+      "esm-browser"
+    ],
+    "prod": false,
+    "enableNonBrowserBranches": true
+  },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "node ../../scripts/build --name=core",
+    "build": "node ../../scripts/build element-plus",
     "test": "jest --coverage --runInBand"
   },
   "engines": {

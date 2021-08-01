@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+  <div id="app"></div>
+
+  <script src="../../dist/runtime-vue3.global.js"></script>
+  <script>
+    const { vue, Renderer } = RuntimeVue3
+    window.vue = vue
+  </script>
+
+  <script type="module">
+    import { Root, Widget } from '../components/index.js'
+
+    const { ref, defineComponent } = vue
+
+    const renderer = new Renderer({
+      el: '#app',
+      root: {
+        components: {
+          Root,
+        },
+        setup() {
+          const text = ref("Hello World123!");
+          return { text };
+        },
+        template: `<root>{{ text }}</root>`,
+      },
+      widgets: [],
+      schema: {}
+    })
+
+    const app = renderer.render()
+  </script>
+</body>
+
+</html>

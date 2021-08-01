@@ -41,13 +41,9 @@ async function run() {
     // 针对发布版本，移除缓存以防止过时类型生成
     await fs.remove(path.resolve(__dirname, '../node_modules/.rts2_cache'))
   }
-  if (!targets.length) {
-    await buildAll(allTargets)
-    checkAllSizes(allTargets)
-  } else {
-    await buildAll(fuzzyMatchTarget(targets, buildAllMatching))
-    checkAllSizes(fuzzyMatchTarget(targets, buildAllMatching))
-  }
+
+  await buildAll(fuzzyMatchTarget(targets, buildAllMatching))
+  checkAllSizes(fuzzyMatchTarget(targets, buildAllMatching))
 }
 
 async function buildAll(targets) {

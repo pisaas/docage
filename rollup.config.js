@@ -7,6 +7,7 @@ import path from 'path'
 import ts from 'rollup-plugin-typescript2'
 import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
+import alias from '@rollup/plugin-alias'
 
 if (!process.env.TARGET) {
   throw new Error('TARGET package must be specified via --environment flag.')
@@ -107,6 +108,8 @@ function createConfig(format, output, plugins = []) {
 
   let entryFile = `src/index.ts`
 
+  let aliasEntries = []
+
   let external = []
 
   if (isGlobalBuild || isBrowserESMBuild) {
@@ -114,6 +117,14 @@ function createConfig(format, output, plugins = []) {
       // normal browser builds - non-browser only imports are tree-shaken,
       // they are only listed here to suppress warnings.
       external = ['source-map', '@babel/parser', 'estree-walker']
+    } else {
+      aliasEntries = [
+        ...aliasEntries,
+        {
+          find: 'vue',
+          replacement: 'vue/dist/vue.esm-bundler.js'
+        }
+      ]
     }
   } else {
     external = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})]
@@ -123,9 +134,7 @@ function createConfig(format, output, plugins = []) {
     packageOptions.enableNonBrowserBranches && format !== 'cjs'
       ? [
           // @ts-ignore
-          require('@rollup/plugin-commonjs')({
-            sourceMap: false
-          }),
+          // require('@rollup/plugin-commonjs')({ sourceMap: false }),
           // @ts-ignore
           require('rollup-plugin-polyfill-node')(),
           require('@rollup/plugin-node-resolve').nodeResolve()
@@ -153,6 +162,9 @@ function createConfig(format, output, plugins = []) {
         isGlobalBuild,
         isNodeBuild
       ),
+      alias({
+        entries: aliasEntries
+      }),
       ...nodePlugins,
       ...plugins
     ],
@@ -195,9 +207,8 @@ function createReplacePlugin(
     // is targeting Node (SSR)?
     __NODE_JS__: isNodeBuild,
 
-    // feature flags
-    __FEATURE_SUSPENSE__: true,
-    __FEATURE_PROD_DEVTOOLS__: isBundlerESMBuild ? `__VUE_PROD_DEVTOOLS__` : false
+    __VUE_OPTIONS_API__: isBundlerESMBuild ? `__VUE_OPTIONS_API__` : true,
+    __VUE_PROD_DEVTOOLS__: isBundlerESMBuild ? `__VUE_PROD_DEVTOOLS__` : false
   }
   // allow inline overrides like
   //__RUNTIME_COMPILE__=true yarn build runtime-core

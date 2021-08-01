@@ -29,7 +29,12 @@ export class Renderer {
     const instance = createApp(root)
 
     // 设置示例配置
-    instance.config = options.config
+    if (typeof options.config === 'object') {
+      Object.keys(options.config).forEach((key: string) => {
+        // @ts-ignore
+        instance.config[key] = options.config[key]
+      })
+    }
 
     instance.mount(el)
 
