@@ -1,39 +1,117 @@
 <!DOCTYPE html>
 <html>
 
-<head></head>
+<head>
+  <link rel="stylesheet" href="../../node_modules/element-plus/lib/theme-chalk/index.css">
+
+  <script src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script src="../../node_modules/vuex/dist/vuex.global.js"></script>
+
+  <script src="../../node_modules/element-plus/lib/index.full.js"></script>
+  <script src="../../node_modules/lodash/lodash.js"></script>
+  <script src="../../dist/runtime-vue3.global.js"></script>
+</head>
 
 <body>
   <div id="app"></div>
 
-  <script src="../../dist/runtime-vue3.global.js"></script>
-  <script>
-    const { vue, Renderer } = RuntimeVue3
-    window.vue = vue
-  </script>
-
+  <!-- 导入es module runtime-vue3 -->
   <script type="module">
-    import { Root, Widget } from '../components/index.js'
+    import * as widgets from '../widgets/index.js'
 
-    const { ref, defineComponent } = vue
+    const { reactive, h } = Vue
+    const { Renderer, Entry } = DocageRuntimeVue3
 
     const renderer = new Renderer({
       el: '#app',
-      root: {
-        components: {
-          Root,
+      entry: Entry,
+      widgets: Object.values(widgets),
+      schema:
+      {
+        "type": "page",
+        "title": "地址栏变化自动更新",
+        "remark": {
+          "title": "标题",
+          "body": "这是一段描述问题，注意到了没，还可以设置标题。而且只有点击了才弹出来。",
+          "icon": "question-mark",
+          "placement": "right",
+          "trigger": "click",
+          "rootClose": true
         },
-        setup() {
-          const text = ref("Hello World123!");
-          return { text };
+        "toolbar": "工具栏",
+        "initApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/initData?id=${id}",
+        "aside": {
+          "type": "wrapper",
+          "size": "xs",
+          "className": "",
+          "body": {
+            "type": "nav",
+            "collapse": false,
+            "items": [
+              {
+                "title": "页面1",
+                "to": "?id=1"
+              },
+              {
+                "title": "页面2",
+                "children": [
+                  {
+                    "title": "页面2-1",
+                    "to": "?id=2-1"
+                  },
+                  {
+                    "title": "页面2-2",
+                    "to": "?id=2-2"
+                  },
+                  {
+                    "title": "页面2-3（disabled）",
+                    "disabled": true,
+                    "to": "?id=2-3"
+                  }
+                ]
+              },
+              {
+                "title": "页面3",
+                "to": "?id=3"
+              }
+            ]
+          }
         },
-        template: `<root>{{ text }}</root>`,
-      },
-      widgets: [],
-      schema: {}
+        "body": [
+          {
+            type: 'button',
+            class: 'my-button',
+            body: '确认'
+          },
+          {
+            type: 'row',
+            class: 'my-row',
+            body: [{
+              type: 'col',
+              span: 6,
+              class: 'my-col',
+              body: 'col1'
+            },
+            {
+              type: 'col',
+              span: 6,
+              class: 'my-col',
+              body: {
+                type: 'button',
+                body: '可以'
+              }
+            }]
+          },
+          `<p><span class="text-danger">注意 page 渲染器的 \`initApi\` 中有变量跟地址栏中变量关联，只要值发生了变化，就会重新拉取一次 initApi。</span></p>`,
+          `<p>这些数据是通过 initApi 拉取到的数据。</p>`
+        ]
+      }
     })
 
-    const app = renderer.render()
+    // 渲染实例化
+    renderer.create()
+    renderer.use(ElementPlus)
+    renderer.mount()
   </script>
 </body>
 

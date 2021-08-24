@@ -14,11 +14,10 @@
     "dist/**"
   ],
   "buildOptions": {
-    "name": "RuntimeVue3",
+    "name": "DocageRuntimeVue3",
     "formats": [
       "cjs",
       "esm-bundler",
-      "esm-browser",
       "global"
     ],
     "prod": false,
@@ -42,14 +41,11 @@
   "bugs": {
     "url": "https://github.com/pisaas/docage/issues"
   },
-  "peerDependencies": {
-    "vue": "3.x",
-    "vuex": "4.x"
-  },
-  "dependencies": {
-    "@docage/core": "^0.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@babel/preset-env": "^7.15.0",
+    "element-plus": "^1.0.2-beta.70",
+    "lodash": "^4.17.21",
     "vue": "^3.1.5",
     "vuex": "^4.0.2"
   }

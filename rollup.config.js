@@ -81,6 +81,9 @@ function createConfig(format, output, plugins = []) {
   const isBrowserESMBuild = /esm-browser/.test(format)
   const isNodeBuild = format === 'cjs'
   const isGlobalBuild = /global/.test(format)
+  const isBrowserBuild =
+    (isGlobalBuild || isBrowserESMBuild || isBundlerESMBuild) &&
+    !packageOptions.enableNonBrowserBranches
 
   if (isGlobalBuild) {
     output.name = packageOptions.name
@@ -111,6 +114,7 @@ function createConfig(format, output, plugins = []) {
   let aliasEntries = []
 
   let external = []
+  let globals = {}
 
   if (isGlobalBuild || isBrowserESMBuild) {
     if (!packageOptions.enableNonBrowserBranches) {
@@ -118,17 +122,20 @@ function createConfig(format, output, plugins = []) {
       // they are only listed here to suppress warnings.
       external = ['source-map', '@babel/parser', 'estree-walker']
     } else {
-      aliasEntries = [
-        ...aliasEntries,
-        {
-          find: 'vue',
-          replacement: 'vue/dist/vue.esm-bundler.js'
-        }
-      ]
+      aliasEntries = [...aliasEntries]
+    }
+
+    external = [...external, 'vue', 'vuex']
+    globals = {
+      // @ts-ignore
+      vue: 'Vue',
+      vuex: 'Vuex'
     }
   } else {
     external = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})]
   }
+
+  output.globals = globals
 
   const nodePlugins =
     packageOptions.enableNonBrowserBranches && format !== 'cjs'
@@ -157,8 +164,7 @@ function createConfig(format, output, plugins = []) {
         isProductionBuild,
         isBundlerESMBuild,
         isBrowserESMBuild,
-        (isGlobalBuild || isBrowserESMBuild || isBundlerESMBuild) &&
-          !packageOptions.enableNonBrowserBranches,
+        isBrowserBuild,
         isGlobalBuild,
         isNodeBuild
       ),
