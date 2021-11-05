@@ -14,17 +14,19 @@
     "dist/**"
   ],
   "buildOptions": {
-    "name": "ElementPlus",
+    "name": "DocageElementPlus",
+    "vue": true,
     "formats": [
       "cjs",
-      "esm-browser"
+      "esm-bundler",
+      "global"
     ],
     "prod": false,
     "enableNonBrowserBranches": true
   },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "node ../../scripts/build element-plus",
+    "build": "node ../../scripts/build.view element-plus",
     "test": "jest --coverage --runInBand"
   },
   "engines": {
@@ -43,5 +45,11 @@
   "dependencies": {
     "@docage/core": "^0.1.0",
     "@docage/runtime-vue3": "^0.1.0"
+  },
+  "devDependencies": {
+    "element-plus": "^1.0.2-beta.70",
+    "lodash": "^4.17.21",
+    "vue": "^3.1.5",
+    "vuex": "^4.0.2"
   }
 }

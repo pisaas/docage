@@ -1,19 +1,27 @@
 module.exports = {
+  parser: 'vue-eslint-parser',
   root: true,
   env: {
     browser: true,
     node: true
   },
+  plugins: ['@typescript-eslint'],
   extends: [
-    'plugin:vue/vue3-essential',
+    // 'plugin:vue/vue3-essential',
     'eslint:recommended',
+    'plugin:vue/vue3-recommended',
     '@vue/typescript/recommended',
     '@vue/prettier',
     '@vue/prettier/@typescript-eslint'
   ],
   parserOptions: {
     parser: '@typescript-eslint/parser',
-    ecmaVersion: 2020
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+      tsx: true
+    }
   },
   settings: {
     'import/parsers': {

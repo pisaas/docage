@@ -31,6 +31,7 @@ const buildTypes = (args.t || args.types) !== false || isRelease
 const buildAllMatching = args.all || args.a
 const commit = execa.sync('git', ['rev-parse', 'HEAD']).stdout.slice(0, 7)
 
+const scriptDir = __dirname
 const workspaceDir = path.join(__dirname, '..')
 const packagesDir = path.join(workspaceDir, 'packages')
 
@@ -87,7 +88,7 @@ async function build(target) {
     'rollup',
     [
       '--config',
-      `${workspaceDir}/rollup.config.js`,
+      `${scriptDir}/rollup.config.js`,
       '--environment',
       [
         `COMMIT:${commit}`,

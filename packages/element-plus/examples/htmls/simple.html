@@ -9,7 +9,8 @@
 
   <script src="../../node_modules/element-plus/lib/index.full.js"></script>
   <script src="../../node_modules/lodash/lodash.js"></script>
-  <script src="../../dist/runtime-vue3.global.js"></script>
+  <script src="../../node_modules/@docage/runtime-vue3/dist/runtime-vue3.global.js"></script>
+  <script src="../../dist/element-plus.global.js"></script>
 </head>
 
 <body>
@@ -17,16 +18,16 @@
 
   <!-- 导入es module runtime-vue3 -->
   <script type="module">
-    import * as widgets from '../widgets/index.js'
-
     const { reactive, h } = Vue
     const { Renderer, Entry } = DocageRuntimeVue3
+    const { widgets } = DocageViewElementPlus
 
     const renderer = new Renderer({
       el: '#app',
       entry: Entry,
       widgets: Object.values(widgets),
-      schema: {
+      schema:
+      {
         "type": "page",
         "title": "地址栏变化自动更新",
         "remark": {
@@ -80,7 +81,7 @@
           {
             type: 'button',
             class: 'my-button',
-            body: '确认12'
+            body: '确认'
           },
           {
             type: 'row',
@@ -97,7 +98,7 @@
               class: 'my-col',
               body: {
                 type: 'button',
-                body: '可以123456'
+                body: '可以'
               }
             }]
           },

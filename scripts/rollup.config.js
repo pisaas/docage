@@ -4,17 +4,20 @@
 
 // @ts-check
 import path from 'path'
-import ts from 'rollup-plugin-typescript2'
+import ts2 from 'rollup-plugin-typescript2'
+import nodeResolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
 import alias from '@rollup/plugin-alias'
+
+import vue from 'rollup-plugin-vue'
 
 if (!process.env.TARGET) {
   throw new Error('TARGET package must be specified via --environment flag.')
 }
 
-const masterVersion = require('./package.json').version
-const packagesDir = path.resolve(__dirname, 'packages')
+const masterVersion = require('../package.json').version
+const packagesDir = path.resolve(__dirname, '..', 'packages')
 const packageDir = path.resolve(packagesDir, process.env.TARGET)
 const resolve = p => path.resolve(packageDir, p)
 const pkg = require(resolve(`package.json`))
@@ -91,10 +94,10 @@ function createConfig(format, output, plugins = []) {
 
   const shouldEmitDeclarations = pkg.types && process.env.TYPES != null && !hasTSChecked
 
-  const tsPlugin = ts({
+  const ts2Plugin = ts2({
     check: process.env.NODE_ENV === 'production' && !hasTSChecked,
-    tsconfig: path.resolve(__dirname, 'tsconfig.json'),
-    cacheRoot: path.resolve(__dirname, 'node_modules/.rts2_cache'),
+    tsconfig: path.resolve(__dirname, '..', 'tsconfig.json'),
+    cacheRoot: path.resolve(__dirname, '..', 'node_modules/.rts2_cache'),
     tsconfigOverride: {
       compilerOptions: {
         sourceMap: output.sourcemap,
@@ -148,18 +151,18 @@ function createConfig(format, output, plugins = []) {
         ]
       : []
 
-  // const nodePlugins = []
+  const vuePlugins = createVuePlugins(packageOptions)
 
   return {
     input: resolve(entryFile),
-    // Global and Browser ESM builds inlines everything so that they can be
-    // used alone.
+    output,
     external,
     plugins: [
       json({
         namedExports: false
       }),
-      tsPlugin,
+      ts2Plugin,
+      [...vuePlugins],
       createReplacePlugin(
         isProductionBuild,
         isBundlerESMBuild,
@@ -174,7 +177,6 @@ function createConfig(format, output, plugins = []) {
       ...nodePlugins,
       ...plugins
     ],
-    output,
     onwarn: (msg, warn) => {
       if (!/Circular/.test(msg)) {
         warn(msg)
@@ -184,6 +186,51 @@ function createConfig(format, output, plugins = []) {
       moduleSideEffects: false
     }
   }
+}
+
+function createVuePlugins(packageOptions = {}) {
+  const packageVueOptions = packageOptions.vue
+
+  if (!packageVueOptions) return []
+
+  let vuePlugins = []
+
+  // preVue
+  const preVue = [
+    alias({
+      entries: [
+        {
+          find: '@',
+          replacement: `${path.resolve(packageDir, 'src')}`
+        }
+      ],
+      // @ts-ignore
+      customResolver: nodeResolve({
+        extensions: ['.js', '.jsx', '.vue']
+      })
+    })
+  ]
+
+  // vue
+  let vueOptions = {
+    target: 'browser',
+    preprocessStyles: true
+  }
+
+  if (typeof packageVueOptions === 'object') {
+    vueOptions = {
+      ...vueOptions,
+      ...packageVueOptions
+    }
+  }
+
+  // @ts-ignore
+  const vuePlugin = vue({ ...vueOptions })
+  vuePlugins.push(vuePlugin)
+
+  vuePlugins = [...preVue, vuePlugin]
+
+  return vuePlugins
 }
 
 function createReplacePlugin(
