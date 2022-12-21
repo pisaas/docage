@@ -1,0 +1,14 @@
+{
+  "name": "@docage/schemas",
+  "version": "0.1.0",
+  "description": "docage应用结构",
+  "types": "src/index.ts",
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "rayl"
+}

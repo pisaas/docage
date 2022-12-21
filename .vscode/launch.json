@@ -1,0 +1,62 @@
+{
+  // 使用 IntelliSense 了解相关属性。
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Build core",
+      "type": "node",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/scripts/build.js",
+      "stopOnEntry": false,
+      "args": ["core"],
+      "cwd": "${workspaceFolder}/packages/core",
+      "preLaunchTask": null,
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["--nolazy"],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Build runtime-vue3",
+      "type": "node",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/scripts/build.js",
+      "stopOnEntry": false,
+      "args": ["runtime-vue3"],
+      "cwd": "${workspaceFolder}/packages/runtime-vue3",
+      "preLaunchTask": null,
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["--nolazy"],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Build view-element-plus",
+      "type": "node",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/scripts/build.view.js",
+      "stopOnEntry": false,
+      "args": ["element-plus"],
+      "cwd": "${workspaceFolder}/packages/element-plus",
+      "preLaunchTask": null,
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["--nolazy"],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    }
+  ]
+}

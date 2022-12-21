@@ -1,0 +1,87 @@
+{
+  "name": "@docage/docage-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*",
+    "tools/*",
+    "sample/*",
+    "doc"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "commit": "git-cz",
+    "test": "jest",
+    "clean": "pnpm run clean -r --stream",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --max-warnings 0 && pretty-quick --check --branch dev",
+    "lint:fix": "eslint --fix . --ext .vue,.js,.ts,.jsx,.tsx && pretty-quick --branch dev"
+  },
+  "dependencies": {
+    "axios": "^1.2.1",
+    "dayjs": "^1.11.7",
+    "mitt": "^3.0.0",
+    "pinia": "^2.0.28",
+    "store2": "^2.14.2",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.11.17",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/compiler-sfc": "^3.2.45",
+    "autoprefixer": "^10.4.13",
+    "commitizen": "^4.2.6",
+    "cz-customizable": "^7.0.0",
+    "eslint": "^8.30.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard-with-typescript": "^24.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.6.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.8.0",
+    "fs-extra": "^11.1.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "postcss": "^8.4.20",
+    "prettier": "^2.8.1",
+    "rimraf": "^3.0.2",
+    "sass": "^1.57.1",
+    "sucrase": "^3.29.0",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.2",
+    "vitest": "^0.26.2"
+  },
+  "packageManager": "pnpm@6.20.4",
+  "engines": {
+    "node": ">= 14"
+  },
+  "lint-staged": {
+    "*.md": "prettier --write",
+    "*.{ts,tsx,js,vue,less}": "prettier --write",
+    "*.{ts,tsx,js,vue}": "eslint --fix",
+    "*.{vue,css,less}": "stylelint --fix"
+  },
+  "browserslist": [
+    "> 5%",
+    "not ie 11",
+    "not op_mini all"
+  ],
+  "description": "",
+  "author": "rayl",
+  "homepage": "https://devs.pisaas.com/docage",
+  "bugs": {
+    "url": "https://github.com/pisaas/docage/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pisaas/docage.git"
+  }
+}

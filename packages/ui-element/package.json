@@ -1,0 +1,25 @@
+{
+  "name": "@docage/ui-element",
+  "version": "0.1.0",
+  "description": "Docage element-plus ui framework",
+  "main": "index.js",
+  "module": "dist/docage-ui-element.esm.js",
+  "types": "src/index.ts",
+  "files": [
+    "index.js",
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "sucrase-node ../../scripts/build --name=ui-element",
+    "clean": "rimraf dist",
+    "test": "jest --coverage --runInBand"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "rayl"
+}
