@@ -5,6 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Current Test File",
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+      "args": ["run", "${relativeFile}"],
+      "smartStep": true,
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Build core",
       "type": "node",
       "request": "launch",
@@ -13,42 +24,6 @@
       "stopOnEntry": false,
       "args": ["core"],
       "cwd": "${workspaceFolder}/packages/core",
-      "preLaunchTask": null,
-      "runtimeExecutable": "/usr/local/bin/node",
-      "runtimeArgs": ["--nolazy"],
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "console": "integratedTerminal",
-      "sourceMaps": true
-    },
-    {
-      "name": "Build runtime-vue3",
-      "type": "node",
-      "request": "launch",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/scripts/build.js",
-      "stopOnEntry": false,
-      "args": ["runtime-vue3"],
-      "cwd": "${workspaceFolder}/packages/runtime-vue3",
-      "preLaunchTask": null,
-      "runtimeExecutable": "/usr/local/bin/node",
-      "runtimeArgs": ["--nolazy"],
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "console": "integratedTerminal",
-      "sourceMaps": true
-    },
-    {
-      "name": "Build view-element-plus",
-      "type": "node",
-      "request": "launch",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/scripts/build.view.js",
-      "stopOnEntry": false,
-      "args": ["element-plus"],
-      "cwd": "${workspaceFolder}/packages/element-plus",
       "preLaunchTask": null,
       "runtimeExecutable": "/usr/local/bin/node",
       "runtimeArgs": ["--nolazy"],
