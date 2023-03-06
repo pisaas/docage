@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": true,
+    "composite": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@docage/contracts": ["libs/contracts/src/index.ts"],
+      "@docage/core": ["libs/core/src/index.ts"],
+      "@docage/runtime": ["libs/runtime/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
