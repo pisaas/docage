@@ -1,36 +1,36 @@
 {
-  "name": "contracts",
+  "name": "contract",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/contracts/src",
+  "sourceRoot": "libs/contract/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/contracts"
+        "outputPath": "dist/libs/contract"
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs contracts {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs contract {args.ver} {args.tag}"
       },
       "dependsOn": ["build"]
     },
     "test": {
       "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/libs/contracts"],
+      "outputs": ["coverage/libs/contract"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/libs/contracts"
+        "reportsDirectory": "../../coverage/libs/contract"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/contracts/**/*.ts"]
+        "lintFilePatterns": ["libs/contract/**/*.ts"]
       }
     }
   },
