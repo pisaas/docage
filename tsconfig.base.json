@@ -17,6 +17,7 @@
     "paths": {
       "@docage/contract": ["libs/contract/src/index.ts"],
       "@docage/core": ["libs/core/src/index.ts"],
+      "@docage/lab": ["libs/lab/src/index.ts"],
       "@docage/runtime": ["libs/runtime/src/index.ts"]
     }
   },
