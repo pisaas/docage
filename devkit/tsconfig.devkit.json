@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../dist/out-tsc/tools",
+    "outDir": "../dist/out-tsc/devkit",
     "module": "commonjs",
     "target": "es5",
     "types": ["node"],

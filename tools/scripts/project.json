@@ -1,37 +1,31 @@
 {
-  "name": "common",
+  "name": "tools-scripts",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/common/src",
+  "sourceRoot": "tools/scripts/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@docage/scripts:build",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/common",
-        "main": "packages/common/src/index.ts",
-        "tsConfig": "packages/common/tsconfig.lib.json",
-        "format": ["esm", "cjs"],
-        "project": "packages/common/package.json",
-        "compiler": "swc"
+        "outputPath": "dist/tools/scripts",
+        "main": "tools/scripts/src/index.ts",
+        "tsConfig": "tools/scripts/tsconfig.lib.json",
+        "assets": ["tools/scripts/*.md"]
       }
-    },
-    "publish": {
-      "command": "node tools/scripts/publish.mjs common {args.ver} {args.tag}",
-      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/common/**/*.ts"]
+        "lintFilePatterns": ["tools/scripts/**/*.ts", "tools/scripts/executors.json", "tools/scripts/package.json"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/common/jest.config.ts",
+        "jestConfig": "tools/scripts/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

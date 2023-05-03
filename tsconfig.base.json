@@ -2,8 +2,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
-    "sourceMap": true,
     "declaration": false,
+    "sourceMap": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -13,9 +15,12 @@
     "lib": ["es2021", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "useUnknownInCatchVariables": false,
     "baseUrl": ".",
     "paths": {
-      "@docage/common": ["packages/common/src/index.ts"]
+      "@docage/common": ["packages/common/src/index.ts"],
+      "@docage/devkit": ["devkit/core/src/index.ts"],
+      "@docage/scripts": ["tools/scripts/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

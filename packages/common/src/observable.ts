@@ -4,27 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 
 export {
-	IObservable,
-	IObserver,
-	IReader,
-	ISettable,
-	ISettableObservable,
-	ITransaction,
-	observableValue,
-	transaction,
+  IObservable,
+  IObserver,
+  IReader,
+  ISettable,
+  ISettableObservable,
+  ITransaction,
+  observableValue,
+  transaction
 } from './observableImpl/base';
 export { derived } from './observableImpl/derived';
-export {
-	autorun,
-	autorunDelta,
-	autorunHandleChanges,
-	autorunWithStore,
-} from './observableImpl/autorun';
+export { autorun, autorunDelta, autorunHandleChanges, autorunWithStore } from './observableImpl/autorun';
 export * from './observableImpl/utils';
 
 import { ConsoleObservableLogger, setLogger } from './observableImpl/logging';
 
 const enableLogging = false;
 if (enableLogging) {
-	setLogger(new ConsoleObservableLogger());
+  setLogger(new ConsoleObservableLogger());
 }

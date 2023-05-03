@@ -3,6 +3,13 @@
   "npmScope": "docage",
   "tasksRunnerOptions": {
     "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [],
+        "runtimeCacheInputs": ["node -v"]
+      }
+    },
+    "default_1": {
       "runner": "nx-cloud",
       "options": {
         "cacheableOperations": ["build", "lint", "test", "e2e"],
@@ -38,7 +45,7 @@
     "sharedGlobals": []
   },
   "workspaceLayout": {
-    "appsDir": "packages",
-    "libsDir": "packages"
+    "appsDir": "apps",
+    "libsDir": ""
   }
 }
