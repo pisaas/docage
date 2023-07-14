@@ -1,4 +1,4 @@
-export const enum DocageProjectType {
+export const enum ProjectType {
   LIBRARY = 'library', // 标准库项目，如common, core等
   RUNTIME = 'runtime', // 运行时项目
   EXTENSION = 'extension', // 扩展项目

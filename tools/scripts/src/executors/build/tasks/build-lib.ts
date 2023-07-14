@@ -1,7 +1,9 @@
 import type { ExecutorContext } from '@nx/devkit';
 
+// import * as vite from 'vite';
+
+import { paths } from '../../../utils';
 import { BuildExecutorSchema } from '../schema';
-import { paths, rollup } from '../../../utils';
 
 /** 构建 */
 export async function buildLib(options: BuildExecutorSchema, context: ExecutorContext) {
@@ -13,21 +15,19 @@ export async function buildLib(options: BuildExecutorSchema, context: ExecutorCo
   console.log('entry:', entry);
   console.log('outDir:', outputPath);
 
-  await rollup.bundle({
-    input: entry
-    // entryFileName: entry
-
-    // build: {
-    //   minify: true,
-    //   outDir: outputPath,
-    //   lib: {
-    //     entry,
-    //     name: options.name || context.projectName,
-    //     formats: options.format as any,
-    //     fileName: (format: string, entryName: string) => {
-    //       return `${name}-${format}.js`;
-    //     }
-    //   }
-    // }
-  });
+  // await vite.build({
+  //   build: {
+  //     minify: true,
+  //     outDir: outputPath,
+  //     lib: {
+  //       entry,
+  //       name: options.name || context.projectName,
+  //       formats: options.format as any,
+  //       fileName: (format: string, entryName: string) => {
+  //         return `${name}-${format}.js`;
+  //       }
+  //     },
+  //     rollupOptions: {}
+  //   }
+  // });
 }

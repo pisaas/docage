@@ -7,5 +7,5 @@ export interface BuildExecutorSchema {
   main: string;
   outputPath: string;
   tsConfig: string;
-  format?: LibraryFormats[];
+  format: LibraryFormats[];
 }

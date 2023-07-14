@@ -12,16 +12,31 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2021", "dom"],
+    "lib": [
+      "es2021",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "useUnknownInCatchVariables": false,
     "baseUrl": ".",
     "paths": {
-      "@docage/common": ["packages/common/src/index.ts"],
-      "@docage/devkit": ["devkit/core/src/index.ts"],
-      "@docage/scripts": ["tools/scripts/src/index.ts"]
+      "@docage/common": [
+        "packages/common/src/index.ts"
+      ],
+      "@docage/core": [
+        "packages/core/src/index.ts"
+      ],
+      "@docage/devkit": [
+        "devkit/core/src/index.ts"
+      ],
+      "@docage/scripts": [
+        "tools/scripts/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
