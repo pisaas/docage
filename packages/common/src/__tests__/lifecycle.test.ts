@@ -4,8 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Emitter } from '../src/event';
-import { DisposableStore, dispose, IDisposable, markAsSingleton, ReferenceCollection, SafeDisposable, toDisposable } from '../src/lifecycle';
+import { Emitter } from '../event';
+import {
+  DisposableStore,
+  dispose,
+  IDisposable,
+  markAsSingleton,
+  ReferenceCollection,
+  SafeDisposable,
+  toDisposable
+} from '../lifecycle';
 import { ensureNoDisposablesAreLeakedInTestSuite, throwIfDisposablesAreLeaked } from './utils';
 
 class Disposable implements IDisposable {

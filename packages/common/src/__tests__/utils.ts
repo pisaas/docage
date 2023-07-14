@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IDisposable, IDisposableTracker, setDisposableTracker } from '../src/lifecycle';
+import { IDisposable, IDisposableTracker, setDisposableTracker } from '../lifecycle';
 
 export type ValueCallback<T = any> = (value: T | Promise<T>) => void;
 

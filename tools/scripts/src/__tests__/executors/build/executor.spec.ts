@@ -1,9 +1,9 @@
-import { BuildExecutorSchema } from './schema';
-import executor from './executor';
-import { paths } from '../../utils';
+import { BuildExecutorSchema } from '../../../executors/build/schema';
+import executor from '../../../executors/build/executor';
+import { paths } from '../../../utils';
 
 describe('Build Executor', () => {
-  it('run common build', async () => {
+  test('run common build', async () => {
     const name = 'common';
 
     const output = await executor(

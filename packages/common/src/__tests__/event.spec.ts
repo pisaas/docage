@@ -3,13 +3,24 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import { timeout } from '../src/async';
-import { CancellationToken } from '../src/cancellation';
-import { errorHandler, setUnexpectedErrorHandler } from '../src/errors';
-import { AsyncEmitter, DebounceEmitter, Emitter, Event, EventBufferer, EventMultiplexer, IWaitUntil, MicrotaskEmitter, PauseableEmitter, Relay } from '../src/event';
-import { DisposableStore, IDisposable, isDisposable, setDisposableTracker, toDisposable } from '../src/lifecycle';
-import { observableValue, transaction } from '../src/observable';
-import { MicrotaskDelay } from '../src/symbols';
+import { timeout } from '../async';
+import { CancellationToken } from '../cancellation';
+import { errorHandler, setUnexpectedErrorHandler } from '../errors';
+import {
+  AsyncEmitter,
+  DebounceEmitter,
+  Emitter,
+  Event,
+  EventBufferer,
+  EventMultiplexer,
+  IWaitUntil,
+  MicrotaskEmitter,
+  PauseableEmitter,
+  Relay
+} from '../event';
+import { DisposableStore, IDisposable, isDisposable, setDisposableTracker, toDisposable } from '../lifecycle';
+import { observableValue, transaction } from '../observable';
+import { MicrotaskDelay } from '../symbols';
 import { runWithFakedTimers } from './timeTravelScheduler';
 import { DisposableTracker, ensureNoDisposablesAreLeakedInTestSuite } from './utils';
 
@@ -1053,7 +1064,14 @@ describe('Event utils', () => {
     log.push({ label: 'disposeAll' });
     disposable.dispose();
 
-    assert.deepStrictEqual(log, [{ label: 'handleEvent', data: null, idx: 0 }, { label: 'fire' }, { label: 'dispose', idx: 0 }, { label: 'handleEvent', data: 'someEventData', idx: 1 }, { label: 'disposeAll' }, { label: 'dispose', idx: 1 }]);
+    assert.deepStrictEqual(log, [
+      { label: 'handleEvent', data: null, idx: 0 },
+      { label: 'fire' },
+      { label: 'dispose', idx: 0 },
+      { label: 'handleEvent', data: 'someEventData', idx: 1 },
+      { label: 'disposeAll' },
+      { label: 'dispose', idx: 1 }
+    ]);
   });
 
   describe('accumulate', () => {

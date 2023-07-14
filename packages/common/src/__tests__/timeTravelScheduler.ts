@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Emitter, Event } from '../src/event';
-import { Disposable, IDisposable } from '../src/lifecycle';
-import { setTimeout0, setTimeout0IsFaster } from '../src/platform';
+import { Emitter, Event } from '../event';
+import { Disposable, IDisposable } from '../lifecycle';
+import { setTimeout0, setTimeout0IsFaster } from '../platform';
 
 interface PriorityQueue<T> {
   length: number;
@@ -20,7 +20,10 @@ class SimplePriorityQueue<T> implements PriorityQueue<T> {
   private isSorted = false;
   private items: T[];
 
-  constructor(items: T[], private readonly compare: (a: T, b: T) => number) {
+  constructor(
+    items: T[],
+    private readonly compare: (a: T, b: T) => number
+  ) {
     this.items = items;
   }
 

@@ -6,10 +6,10 @@ import { BuildExecutorSchema } from './schema';
 import { buildLib } from './tasks';
 
 /** 默认值 */
-export const defaultExecutorOptions: Partial<BuildExecutorSchema> = {
+export const defaultExecutorOptions = {
   type: DocageProjectType.LIBRARY,
   format: ['esm', 'cjs']
-};
+} as const;
 
 export default async function runExecutor(options: BuildExecutorSchema, context: ExecutorContext) {
   const mergedOptions = deepmerge<BuildExecutorSchema>(defaultExecutorOptions, options);
