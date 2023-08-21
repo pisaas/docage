@@ -30,6 +30,9 @@
       "@docage/devkit": [
         "devkit/core/src/index.ts"
       ],
+      "@docage/lib": [
+        "packages/lib/src/index.ts"
+      ],
       "@docage/scripts": [
         "tools/scripts/src/index.ts"
       ]
